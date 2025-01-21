@@ -1,0 +1,28 @@
+import nltk
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+import matplotlib.pyplot as plt
+
+# Sample central bank statements
+statements = [
+    "The central bank remains committed to maintaining stability in the financial system.",
+    "Inflation is expected to rise over the next quarter due to increased demand.",
+    "We are prepared to adjust interest rates to ensure economic growth continues.",
+    "The economy is showing signs of recovery after a period of stagnation.",
+    "Risks to the economic outlook remain due to geopolitical tensions."
+]
+
+# Initialize the VADER sentiment analyzer
+nltk.download('vader_lexicon')
+sid = SentimentIntensityAnalyzer()
+
+# Perform sentiment analysis
+sentiments = [sid.polarity_scores(statement)['compound'] for statement in statements]
+
+# Plotting results
+plt.figure(figsize=(12, 6))
+plt.bar(range(len(statements)), sentiments, tick_label=[f'Statement {i+1}' for i in range(len(statements))])
+plt.xlabel('Central Bank Statements')
+plt.ylabel('Sentiment Score')
+plt.title('Sentiment Analysis of Central Bank Statements')
+plt.axhline(0, color='red', linestyle='--')
+plt.show()
